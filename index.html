@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMET User Guide - Canada Soccer</title>
+    <title>COMET Matchday Operations - Canada Soccer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,15 +11,20 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo-section">
-                    <h1 class="comet-title">COMET User Guide</h1>
+                    <h1 class="comet-title" data-text-key="title">COMET Matchday Operations</h1>
                     <span class="canada-soccer-badge">Canada Soccer</span>
-                    <div class="last-updated">Last updated: August 13, 2025</div>
                 </div>
                 <div class="header-controls">
+                    <div class="language-selector">
+                        <label for="language-select" class="sr-only">Select Language</label>
+                        <select id="language-select" class="form-control language-dropdown">
+                            <option value="en">🇨🇦 English</option>
+                            <option value="fr">🇨🇦 Français</option>
+                        </select>
+                    </div>
                     <div class="competition-selector">
                         <label for="competition-select" class="sr-only">Select Competition</label>
                         <select id="competition-select" class="form-control competition-dropdown">
-                            <option value="all">All Competitions</option>
                             <option value="national-adult">National Championships (Adult/Senior)</option>
                             <option value="national-youth">National Championships (Youth U-17/U-15)</option>
                             <option value="pdp">PDP Championship</option>
@@ -27,9 +32,6 @@
                             <option value="futsal">Futsal Canadian Championship</option>
                         </select>
                     </div>
-                    <nav class="breadcrumb">
-                        <span id="breadcrumb-text">Getting Started</span>
-                    </nav>
                 </div>
             </div>
         </div>
@@ -37,444 +39,211 @@
 
     <main class="main-content">
         <div class="container">
-            <!-- Welcome Section -->
-            <section id="welcome" class="welcome-section">
-                <div class="welcome-content">
-                    <h2>Welcome to COMET</h2>
-                    <p class="welcome-description">
-                        This guide will walk you through the complete process of using COMET for competition management, 
-                        from club setup to match day lineups. Select a specific competition above to see tailored requirements.
-                    </p>
-                    <div class="competition-notice">
-                        <strong>Important:</strong> Requirements vary by competition type. Use the competition selector above to view specific requirements for your competition.
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h2 data-text-key="subtitle">Tournament Lineup Management Guide</h2>
+                    <div class="deadline-banner">
+                        <div class="deadline-icon">⏰</div>
+                        <div class="deadline-text">
+                            <strong data-text-key="deadline">Submit 45 minutes before kickoff</strong>
+                        </div>
                     </div>
-                    <div class="section-overview">
-                        <div class="section-card" data-section="participating-clubs" style="border-left: 4px solid #E31E24;">
-                            <div class="section-number">1</div>
-                            <div class="section-info">
-                                <h3>Participating Clubs</h3>
-                                <p>Getting started with COMET for your club</p>
+                    <div class="competition-info">
+                        <div class="roster-limits">
+                            <div class="limit-item">
+                                <div class="limit-label" data-text-key="playersLabel">Players:</div>
+                                <div class="limit-value" id="player-limits">15-21</div>
                             </div>
-                        </div>
-                        <div class="section-card" data-section="your-club" style="border-left: 4px solid #0066CC;">
-                            <div class="section-number">2</div>
-                            <div class="section-info">
-                                <h3>Your CLUB in COMET</h3>
-                                <p>Setting up your club profile and basic information</p>
-                            </div>
-                        </div>
-                        <div class="section-card" data-section="your-team" style="border-left: 4px solid #00A651;">
-                            <div class="section-number">3</div>
-                            <div class="section-info">
-                                <h3>Your competition TEAM</h3>
-                                <p>Managing players and team officials for competition</p>
-                            </div>
-                        </div>
-                        <div class="section-card" data-section="matchday-lineup" style="border-left: 4px solid #FF6B35;">
-                            <div class="section-number">4</div>
-                            <div class="section-info">
-                                <h3>Your matchday lineup</h3>
-                                <p>Creating and submitting match day lineups</p>
+                            <div class="limit-item">
+                                <div class="limit-label" data-text-key="officialsLabel">Officials:</div>
+                                <div class="limit-value" id="official-limits">2-5</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Section 1: Participating Clubs -->
-            <section id="participating-clubs" class="content-section hidden">
-                <div class="section-header" style="background: linear-gradient(135deg, #E31E24, #B91C1C);">
-                    <div class="section-header-content">
-                        <h2>1. Participating Clubs</h2>
-                        <p>Getting started with COMET for your club</p>
+            <!-- Steps Section -->
+            <section class="steps-section">
+                <div class="progress-bar">
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-fill"></div>
                     </div>
                 </div>
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">1.1</div>
-                        <div class="step-content">
-                            <h3>Timeline of Events</h3>
-                            <p>Key deadlines and important dates for competition preparation - these vary by competition type</p>
-                            <div class="step-details">
-                                <div class="important-note">
-                                    <strong>Important:</strong> Review all competition deadlines carefully to ensure your club meets all requirements. Each competition has specific timelines for registration, document submission, and team finalization.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">1.2</div>
-                        <div class="step-content">
-                            <h3>Preparation Phase</h3>
-                            <p>Initial setup and qualification requirements</p>
-                            <div class="step-details">
-                                <p>Ensure your club meets all eligibility requirements before proceeding to registration. Requirements may vary between amateur and professional competitions.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Section 2: Your CLUB in COMET -->
-            <section id="your-club" class="content-section hidden">
-                <div class="section-header" style="background: linear-gradient(135deg, #0066CC, #0056B3);">
-                    <div class="section-header-content">
-                        <h2>2. Your CLUB in COMET</h2>
-                        <p>Setting up your club profile and basic information</p>
-                    </div>
-                </div>
                 <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">2.1</div>
-                        <div class="step-content">
-                            <h3>Login to COMET</h3>
-                            <div class="step-details">
-                                <p>Access COMET at <strong>comet.canadasoccer.com</strong> with your provided credentials.</p>
-                                <div class="step-instruction">
-                                    If you have a new account, select 'Forgot Password' to have a new password sent to your email.
-                                </div>
+                    <!-- Step 1: Accessing Match -->
+                    <div class="step-card" data-step="0">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-checkbox">
+                                <input type="checkbox" id="step-0-check" class="step-check">
+                                <label for="step-0-check" class="sr-only">Mark step 1 complete</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">2.2</div>
                         <div class="step-content">
-                            <h3>Accessing Your Club Page</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Select 'Clubs' from the main menu</li>
-                                    <li>Select 'My Club' in the dropdown menu</li>
-                                    <li>Your Club page will open</li>
-                                    <li>Edit details by choosing 'Edit'</li>
+                            <h3 data-text-key="step-0-title">Accessing Your Match</h3>
+                            <p data-text-key="step-0-description">Find and open your tournament fixture in COMET</p>
+                            <div class="step-instructions">
+                                <ol class="instruction-list" id="step-0-instructions">
+                                    <li>Log into COMET at comet.canadasoccer.com</li>
+                                    <li>Navigate to 'Clubs' tab</li>
+                                    <li>Click 'My Next Matches'</li>
+                                    <li>Find your match and click your club tab at the top</li>
                                 </ol>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card">
-                        <div class="step-number">2.3</div>
-                        <div class="step-content">
-                            <h3>Adding Your Club Logo</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Click 'Edit', then click on 'Documents' to add or edit club logo</li>
-                                    <li>In the Documents window, choose 'Club Logo' from the menu</li>
-                                    <li>Click 'Choose' to upload club logo from the computer</li>
-                                    <li>Once uploaded, you will see the newly uploaded logo under Club Profile</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">2.4</div>
-                        <div class="step-content">
-                            <h3>Adding CCES Certificates</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>In the Documents window, choose 'Other' from the menu</li>
-                                    <li>Click 'Choose' to upload required CCES documents from computer</li>
-                                </ol>
-                                <div class="important-note">
-                                    <strong>Required:</strong> All required CCES certificates must be uploaded to the club page.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">2.5</div>
-                        <div class="step-content">
-                            <h3>Creating Team Kits</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Click 'Team Kits' on your Club page</li>
-                                    <li>Click 'Add' to add a new team kit</li>
-                                    <li>Use dropdown menus to select Kit Type (Home/Away/Other/Goalkeeper) and Kit Pattern</li>
-                                    <li>Use Colour Selector to select colours for shirt/shorts/socks</li>
-                                    <li>Press 'Save'</li>
-                                </ol>
-                                <div class="important-note">
-                                    <strong>Requirement:</strong> Teams must have at least 2 different and distinct sets of uniforms. Goalkeepers need 2 uniforms distinguishable from other players plus 3 distinct colour socks.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Section 3: Your competition TEAM -->
-            <section id="your-team" class="content-section hidden">
-                <div class="section-header" style="background: linear-gradient(135deg, #00A651, #008C44);">
-                    <div class="section-header-content">
-                        <h2>3. Your competition TEAM</h2>
-                        <p>Managing players and team officials for competition</p>
-                    </div>
-                </div>
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">3.1</div>
-                        <div class="step-content">
-                            <h3>Player Registration Process</h3>
-                            <div class="step-details">
-                                <div class="warning-note">
-                                    <strong>IMPORTANT:</strong> Before registering a player, ALWAYS CHECK if they already exist in the system using Quick Search or advanced search in the Players module.
-                                </div>
+                    <!-- Step 2: Loading Players -->
+                    <div class="step-card" data-step="1">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-checkbox">
+                                <input type="checkbox" id="step-1-check" class="step-check">
+                                <label for="step-1-check" class="sr-only">Mark step 2 complete</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">3.2</div>
                         <div class="step-content">
-                            <h3>Checking Existing Players</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Use Quick Search at top left of COMET window</li>
-                                    <li>Type player name - if multiple results, you'll see a dropdown list</li>
-                                    <li>If player exists, verify information and update if necessary</li>
-                                    <li>Create a New Registration to attach to existing profile</li>
+                            <h3 data-text-key="step-1-title">Loading Available Players</h3>
+                            <p data-text-key="step-1-description">Access your registered player pool for the competition</p>
+                            <div class="step-instructions">
+                                <ol class="instruction-list" id="step-1-instructions">
+                                    <li>Click 'Load Available Players' button</li>
+                                    <li>Review your player pool on the left side</li>
+                                    <li>Check for any players marked in RED (suspended)</li>
+                                    <li>Verify you have minimum players available</li>
                                 </ol>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card">
-                        <div class="step-number">3.3</div>
-                        <div class="step-content">
-                            <h3>Creating New Player Registration</h3>
-                            <div class="step-details">
-                                <p><strong>Required fields:</strong></p>
-                                <ul class="requirement-list">
-                                    <li>National ID (or passport/driver's license)</li>
-                                    <li>Gender</li>
-                                    <li>Family Name</li>
-                                    <li>First Name</li>
-                                    <li>Common Name (first + last name for game sheets)</li>
-                                    <li>Passport</li>
-                                    <li>Nationality</li>
-                                    <li>Date of Birth</li>
-                                    <li>Country of Birth</li>
-                                    <li>Position</li>
-                                    <li>Picture upload</li>
-                                    <li>Club</li>
-                                    <li>Discipline</li>
-                                    <li>Level (Amateur)</li>
-                                    <li>Date from (registration date)</li>
-                                </ul>
+
+                    <!-- Step 3: Creating Start List -->
+                    <div class="step-card" data-step="2">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-checkbox">
+                                <input type="checkbox" id="step-2-check" class="step-check">
+                                <label for="step-2-check" class="sr-only">Mark step 3 complete</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">3.4</div>
                         <div class="step-content">
-                            <h3>Registration Status Flow</h3>
-                            <div class="step-details">
-                                <div class="status-flow">
-                                    <div class="status-item status-entered">ENTERED</div>
-                                    <div class="status-arrow">→</div>
-                                    <div class="status-item status-submitted">SUBMITTED</div>
-                                    <div class="status-arrow">→</div>
-                                    <div class="status-item status-confirmed">CONFIRMED</div>
-                                </div>
-                                <p>You must edit and save as submitted. Only CONFIRMED players can be added to competition.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">3.5</div>
-                        <div class="step-content">
-                            <h3>Team Officials Registration</h3>
-                            <div class="step-details">
-                                <p>Similar process to players. Required fields include:</p>
-                                <ul class="requirement-list">
-                                    <li>National ID</li>
-                                    <li>Gender</li>
-                                    <li>Family Name</li>
-                                    <li>First Name</li>
-                                    <li>Common Name</li>
-                                    <li>Passport</li>
-                                    <li>Nationality</li>
-                                    <li>Date of Birth</li>
-                                    <li>Country of Birth</li>
-                                    <li>Picture upload</li>
-                                    <li>Club</li>
-                                    <li>Discipline</li>
-                                    <li>Registration Type</li>
-                                    <li>Age Category</li>
-                                    <li>Date from</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card corrected-section">
-                        <div class="step-number">3.6</div>
-                        <div class="step-content">
-                            <h3>Adding Players to Competition - CORRECTED</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Navigate to 'My Competitions' and select your competition</li>
-                                    <li>Go to 'Clubs' tab, find your club, click 'Player' button</li>
-                                    <li>Select CONFIRMED players and enter shirt numbers</li>
-                                    <li>Click 'Add Selected', then change status to SUBMITTED</li>
-                                </ol>
-                                <div class="roster-limits-container">
-                                    <h4>COMPETITION-SPECIFIC ROSTER LIMITS:</h4>
-                                    <div id="roster-limits" class="roster-limits">
-                                        <div class="competition-limit" data-competition="national-adult">
-                                            <strong>National Championships (Adult/Senior):</strong> 15-21 players
-                                        </div>
-                                        <div class="competition-limit" data-competition="national-youth">
-                                            <strong>National Championships (Youth U-17/U-15):</strong> 15-20 players
-                                        </div>
-                                        <div class="competition-limit" data-competition="pdp">
-                                            <strong>PDP Championship:</strong> 16-20 players
-                                        </div>
-                                        <div class="competition-limit" data-competition="masters">
-                                            <strong>Masters Championship:</strong> 15-21 players
-                                        </div>
-                                        <div class="competition-limit" data-competition="futsal">
-                                            <strong>Futsal Championship:</strong> 10-14 players
-                                        </div>
+                            <h3 data-text-key="step-2-title">Creating Your Start List</h3>
+                            <p data-text-key="step-2-description">Select starting players and assign roles</p>
+                            <div class="step-instructions">
+                                <div class="role-guide">
+                                    <div class="role-item">
+                                        <span class="role-code">SL</span>
+                                        <span class="role-desc" data-text-key="role-sl">Starting Lineup (11 players)</span>
+                                    </div>
+                                    <div class="role-item">
+                                        <span class="role-code">GK</span>
+                                        <span class="role-desc" data-text-key="role-gk">Goalkeeper (minimum 1 required)</span>
+                                    </div>
+                                    <div class="role-item">
+                                        <span class="role-code">CP</span>
+                                        <span class="role-desc" data-text-key="role-cp">Captain (1 required)</span>
+                                    </div>
+                                    <div class="role-item">
+                                        <span class="role-code">L</span>
+                                        <span class="role-desc" data-text-key="role-l">Lineup but not starting (substitutes)</span>
                                     </div>
                                 </div>
-                                <div class="important-note">
-                                    <strong>Required:</strong> All competitions require minimum 1 goalkeeper
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card corrected-section">
-                        <div class="step-number">3.7</div>
-                        <div class="step-content">
-                            <h3>Adding Team Officials to Competition - UPDATED</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Select 'Officials' button beside your Club name</li>
-                                    <li>Select officials from your Club pool</li>
-                                    <li>Click 'Add Selected' when finished</li>
+                                <ol class="instruction-list" id="step-2-instructions">
+                                    <li>Select players and assign roles using the codes above</li>
+                                    <li>Click the arrow (→) to move players to Start List</li>
+                                    <li>Use checkboxes and trash icons to move players back if needed</li>
                                 </ol>
-                                <div class="officials-limits-container">
-                                    <h4>TEAM OFFICIALS LIMITS BY COMPETITION:</h4>
-                                    <div id="officials-limits" class="officials-limits">
-                                        <div class="competition-limit" data-competition="national-adult">
-                                            <strong>National Championships (Adult/Senior):</strong> 2-5 officials
-                                        </div>
-                                        <div class="competition-limit" data-competition="national-youth">
-                                            <strong>National Championships (Youth U-17/U-15):</strong> 2-5 officials
-                                        </div>
-                                        <div class="competition-limit" data-competition="pdp">
-                                            <strong>PDP Championship:</strong> 2-6 officials
-                                        </div>
-                                        <div class="competition-limit" data-competition="masters">
-                                            <strong>Masters Championship:</strong> 2-5 officials
-                                        </div>
-                                        <div class="competition-limit" data-competition="futsal">
-                                            <strong>Futsal Championship:</strong> 2-4 officials
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="important-note">
-                                    <strong>Required:</strong> All competitions require at least one official of same gender as division
-                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <!-- Section 4: Your matchday lineup -->
-            <section id="matchday-lineup" class="content-section hidden">
-                <div class="section-header" style="background: linear-gradient(135deg, #FF6B35, #E55A2B);">
-                    <div class="section-header-content">
-                        <h2>4. Your matchday lineup</h2>
-                        <p>Creating and submitting match day lineups</p>
-                    </div>
-                </div>
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">4.1</div>
-                        <div class="step-content">
-                            <h3>Accessing Match Information</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>On Clubs tab, click 'My Next Matches'</li>
-                                    <li>On match page, find your club tab at the top</li>
-                                </ol>
+                    <!-- Step 4: Managing Officials -->
+                    <div class="step-card" data-step="3">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-checkbox">
+                                <input type="checkbox" id="step-3-check" class="step-check">
+                                <label for="step-3-check" class="sr-only">Mark step 4 complete</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">4.2</div>
                         <div class="step-content">
-                            <h3>Creating Your Start List</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li>Click 'Load Available Players'</li>
-                                    <li>Select player roles:
-                                        <ul class="role-list">
-                                            <li><strong>L</strong> - lineup but not starting</li>
-                                            <li><strong>SL</strong> - starting lineup</li>
-                                            <li><strong>GK</strong> - goalkeeper</li>
-                                            <li><strong>CP</strong> - Captain</li>
-                                        </ul>
-                                    </li>
-                                    <li>Click the arrow to confirm players on your match sheet</li>
-                                    <li>Move players between Available and Start List using checkboxes</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">4.3</div>
-                        <div class="step-content">
-                            <h3>Players Under Suspension</h3>
-                            <div class="step-details">
-                                <div class="warning-note">
-                                    Players under active suspension will appear in <strong style="color: #E31E24;">RED</strong> and cannot be selected for the lineup. They will not be able to be checked off and added to your lineup.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">4.4</div>
-                        <div class="step-content">
-                            <h3>Adding Team Officials to Bench</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
+                            <h3 data-text-key="step-3-title">Adding Team Officials to Bench</h3>
+                            <p data-text-key="step-3-description">Select coaching staff and officials for the match</p>
+                            <div class="step-instructions">
+                                <ol class="instruction-list" id="step-3-instructions">
                                     <li>Press 'Edit' button above Club Officials section</li>
-                                    <li>Use dropdown menu to select appropriate individual for each position</li>
-                                    <li>Respect maximum officials allowed per competition type</li>
+                                    <li>Use dropdown menus to select officials for each position</li>
+                                    <li>Ensure you meet minimum requirements</li>
                                 </ol>
-                                <div class="important-note">
-                                    <strong>Note:</strong> Only individuals registered to your Club will appear in dropdown. Official limits vary by competition - see Section 3.7 for details.
+                                <div class="warning-note">
+                                    <strong data-text-key="officials-warning">Officials in RED have active suspensions and cannot be selected</strong>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card">
-                        <div class="step-number">4.5</div>
+
+                    <!-- Step 5: Final Submission -->
+                    <div class="step-card" data-step="4">
+                        <div class="step-header">
+                            <div class="step-number">5</div>
+                            <div class="step-checkbox">
+                                <input type="checkbox" id="step-4-check" class="step-check">
+                                <label for="step-4-check" class="sr-only">Mark step 5 complete</label>
+                            </div>
+                        </div>
                         <div class="step-content">
-                            <h3>Final Submission</h3>
-                            <div class="step-details">
-                                <div class="critical-note">
-                                    <strong>CRITICAL:</strong> To submit your game sheet, you MUST click 'Save as CONFIRMED' button.
+                            <h3 data-text-key="step-4-title">Final Submission</h3>
+                            <p data-text-key="step-4-description">Review and submit your final lineup</p>
+                            <div class="step-instructions">
+                                <div class="critical-checklist">
+                                    <div class="checklist-item">
+                                        <input type="checkbox" id="check-starters" class="checklist-checkbox">
+                                        <label for="check-starters" data-text-key="checklist-starters">11 starting players with 1 goalkeeper</label>
+                                    </div>
+                                    <div class="checklist-item">
+                                        <input type="checkbox" id="check-captain" class="checklist-checkbox">
+                                        <label for="check-captain" data-text-key="checklist-captain">1 designated captain</label>
+                                    </div>
+                                    <div class="checklist-item">
+                                        <input type="checkbox" id="check-officials" class="checklist-checkbox">
+                                        <label for="check-officials" data-text-key="checklist-officials">Appropriate number of officials on bench</label>
+                                    </div>
                                 </div>
-                                <ul class="step-list">
-                                    <li>Once confirmed, your lineup is submitted and cannot be changed</li>
-                                    <li>This must be done no later than 45 minutes prior to match kick-off</li>
-                                    <li>Your submission is stamped with your electronic signature</li>
-                                </ul>
-                                <div class="important-note">
-                                    <strong>Note:</strong> COMET accounts should never be shared - electronic signatures are individual
+                                <div class="submission-warning">
+                                    <div class="warning-icon">⚠️</div>
+                                    <div class="warning-text">
+                                        <p data-text-key="submission-warning-1">Once confirmed, lineup cannot be changed</p>
+                                        <p data-text-key="submission-warning-2">Must be submitted 45 minutes before kickoff</p>
+                                    </div>
                                 </div>
+                                <button class="btn btn--primary btn--lg submission-btn" data-text-key="save-confirmed">
+                                    Save as CONFIRMED
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card">
-                        <div class="step-number">4.6</div>
+
+                    <!-- Step 6: Post-Match -->
+                    <div class="step-card" data-step="5">
+                        <div class="step-header">
+                            <div class="step-number">6</div>
+                            <div class="step-checkbox">
+                                <input type="checkbox" id="step-5-check" class="step-check">
+                                <label for="step-5-check" class="sr-only">Mark step 6 complete</label>
+                            </div>
+                        </div>
                         <div class="step-content">
-                            <h3>Post-Match Activities</h3>
-                            <div class="step-details">
-                                <ol class="step-list">
-                                    <li><strong>Access Match Summary</strong> - PDF copies available through online system</li>
-                                    <li><strong>Disciplinary Reports</strong> - automatic email notifications for any sanctions</li>
-                                    <li>Follow links in emails to access cases in COMET</li>
+                            <h3 data-text-key="step-5-title">Post-Match Activities</h3>
+                            <p data-text-key="step-5-description">Follow-up tasks after the match</p>
+                            <div class="step-instructions">
+                                <ol class="instruction-list" id="step-5-instructions">
+                                    <li>Match Summary Report will be emailed to club contacts</li>
+                                    <li>Access match reports through COMET if needed</li>
+                                    <li>Any disciplinary reports will be sent via email</li>
+                                    <li>Follow email links to access cases in COMET</li>
+                                    <li>Prepare for next match if applicable</li>
                                 </ol>
                             </div>
                         </div>
@@ -482,48 +251,53 @@
                 </div>
             </section>
 
-            <!-- Important Notes Section -->
-            <section class="important-notes">
-                <h3>Important Notes</h3>
-                <div class="notes-grid">
-                    <div class="note-item">
-                        <strong>National ID:</strong> National ID Number is required - use passport or driver's license if no ID number available
+            <!-- Troubleshooting Section -->
+            <section class="troubleshooting-section">
+                <h2 data-text-key="troubleshooting-title">Common Issues & Solutions</h2>
+                <div class="troubleshooting-grid">
+                    <div class="troubleshooting-item">
+                        <h4 data-text-key="problem-1">Player appears in RED and cannot be selected</h4>
+                        <p data-text-key="solution-1">Player has an active suspension and is ineligible for this match</p>
                     </div>
-                    <div class="note-item">
-                        <strong>Common Name:</strong> Common name appears on game sheets - ensure first and last name is entered
+                    <div class="troubleshooting-item">
+                        <h4 data-text-key="problem-2">Cannot find 'Load Available Players' button</h4>
+                        <p data-text-key="solution-2">Ensure you are on your club's match page and have proper permissions</p>
                     </div>
-                    <div class="note-item">
-                        <strong>Eligibility:</strong> Players must be eligible for current season league matches
+                    <div class="troubleshooting-item">
+                        <h4 data-text-key="problem-3">Lineup submission shows error</h4>
+                        <p data-text-key="solution-3">Check that you have exactly 11 starters, 1 goalkeeper, and 1 captain designated</p>
                     </div>
-                    <div class="note-item">
-                        <strong>Reinforcement:</strong> No reinforcement players after qualifying for competition
+                </div>
+            </section>
+
+            <!-- Quick Reference Section -->
+            <section class="quick-reference-section">
+                <h2 data-text-key="quick-reference-title">Quick Reference</h2>
+                <div class="reference-grid">
+                    <div class="reference-card">
+                        <h3 data-text-key="key-deadlines-title">Key Deadlines</h3>
+                        <ul class="deadline-list">
+                            <li data-text-key="deadline-1">45 minutes before kickoff: Final lineup submission deadline</li>
+                            <li data-text-key="deadline-2">60-90 minutes before: Recommended arrival time at venue</li>
+                        </ul>
                     </div>
-                    <div class="note-item">
-                        <strong>Roster Limits:</strong> Roster limits vary significantly by competition type - always check requirements
-                    </div>
-                    <div class="note-item">
-                        <strong>Security:</strong> COMET accounts should never be shared - electronic signatures are individual
-                    </div>
-                    <div class="note-item">
-                        <strong>Deadlines:</strong> All deadlines must be met - late submissions may not be accepted
+                    <div class="reference-card">
+                        <h3 data-text-key="competition-limits-title">Competition Limits</h3>
+                        <div class="current-limits">
+                            <div class="limit-display">
+                                <span data-text-key="players-colon">Players:</span>
+                                <span id="ref-player-limits">15-21</span>
+                            </div>
+                            <div class="limit-display">
+                                <span data-text-key="officials-colon">Officials:</span>
+                                <span id="ref-official-limits">2-5</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
-
-    <!-- Navigation Controls -->
-    <div class="navigation-controls">
-        <button id="prev-section" class="nav-btn btn--secondary" disabled>
-            ← Previous
-        </button>
-        <button id="next-section" class="nav-btn btn--primary">
-            Next →
-        </button>
-        <button id="back-to-overview" class="nav-btn btn--outline hidden">
-            Back to Overview
-        </button>
-    </div>
 
     <script src="app.js"></script>
 </body>

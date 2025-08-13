@@ -1,31 +1,20 @@
-// COMET User Guide - Enhanced with Competition-Specific Features - FIXED
+// COMET Matchday Operations Guide - Enhanced with Bilingual Support
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('COMET Guide DOM loaded');
+    console.log('COMET Matchday Operations loaded');
     
     // Application state
-    let currentSectionIndex = -1;
-    let isOnWelcome = true;
-    let selectedCompetition = 'all';
+    let currentLanguage = 'en';
+    let selectedCompetition = 'national-adult';
+    let completedSteps = new Set();
     
-    const sections = [
-        'participating-clubs',
-        'your-club', 
-        'your-team',
-        'matchday-lineup'
-    ];
-    
-    const sectionTitles = {
-        'participating-clubs': 'Participating Clubs',
-        'your-club': 'Your CLUB in COMET',
-        'your-team': 'Your competition TEAM',
-        'matchday-lineup': 'Your matchday lineup'
-    };
-
-    // Competition data
-    const competitionData = {
+    // Competition data from JSON
+    const competitions = {
         'national-adult': {
-            name: 'National Championships (Adult/Senior)',
+            name: {
+                en: 'National Championships (Adult/Senior)',
+                fr: 'Championnats nationaux (Adulte/Sénior)'
+            },
             playerMin: 15,
             playerMax: 21,
             officialsMin: 2,
@@ -33,7 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
             color: '#E31E24'
         },
         'national-youth': {
-            name: 'National Championships (Youth U-17/U-15)',
+            name: {
+                en: 'National Championships (Youth U-17/U-15)',
+                fr: 'Championnats nationaux (Jeunesse U-17/U-15)'
+            },
             playerMin: 15,
             playerMax: 20,
             officialsMin: 2,
@@ -41,7 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
             color: '#0066CC'
         },
         'pdp': {
-            name: 'PDP Championship',
+            name: {
+                en: 'PDP Championship',
+                fr: 'Championnat PDJ'
+            },
             playerMin: 16,
             playerMax: 20,
             officialsMin: 2,
@@ -49,7 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
             color: '#00A651'
         },
         'masters': {
-            name: 'Masters Championship', 
+            name: {
+                en: 'Masters Championship',
+                fr: 'Championnat Masters'
+            },
             playerMin: 15,
             playerMax: 21,
             officialsMin: 2,
@@ -57,7 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
             color: '#FF6B35'
         },
         'futsal': {
-            name: 'Futsal Canadian Championship',
+            name: {
+                en: 'Futsal Canadian Championship',
+                fr: 'Championnat canadien de futsal'
+            },
             playerMin: 10,
             playerMax: 14,
             officialsMin: 2,
@@ -66,55 +67,223 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Competition selector functionality
-    function updateCompetitionContent(competitionId) {
-        console.log('Updating competition content for:', competitionId);
-        selectedCompetition = competitionId;
+    // Language content
+    const content = {
+        en: {
+            title: 'COMET Matchday Operations',
+            subtitle: 'Tournament Lineup Management Guide',
+            deadline: 'Submit 45 minutes before kickoff',
+            playersLabel: 'Players',
+            officialsLabel: 'Officials',
+            'step-0-title': 'Accessing Your Match',
+            'step-0-description': 'Find and open your tournament fixture in COMET',
+            'step-1-title': 'Loading Available Players',
+            'step-1-description': 'Access your registered player pool for the competition',
+            'step-2-title': 'Creating Your Start List',
+            'step-2-description': 'Select starting players and assign roles',
+            'step-3-title': 'Adding Team Officials to Bench',
+            'step-3-description': 'Select coaching staff and officials for the match',
+            'step-4-title': 'Final Submission',
+            'step-4-description': 'Review and submit your final lineup',
+            'step-5-title': 'Post-Match Activities',
+            'step-5-description': 'Follow-up tasks after the match',
+            'role-sl': 'Starting Lineup (11 players)',
+            'role-gk': 'Goalkeeper (minimum 1 required)',
+            'role-cp': 'Captain (1 required)',
+            'role-l': 'Lineup but not starting (substitutes)',
+            'officials-warning': 'Officials in RED have active suspensions and cannot be selected',
+            'checklist-starters': '11 starting players with 1 goalkeeper',
+            'checklist-captain': '1 designated captain',
+            'checklist-officials': 'Appropriate number of officials on bench',
+            'submission-warning-1': 'Once confirmed, lineup cannot be changed',
+            'submission-warning-2': 'Must be submitted 45 minutes before kickoff',
+            'save-confirmed': 'Save as CONFIRMED',
+            'troubleshooting-title': 'Common Issues & Solutions',
+            'problem-1': 'Player appears in RED and cannot be selected',
+            'solution-1': 'Player has an active suspension and is ineligible for this match',
+            'problem-2': 'Cannot find \'Load Available Players\' button',
+            'solution-2': 'Ensure you are on your club\'s match page and have proper permissions',
+            'problem-3': 'Lineup submission shows error',
+            'solution-3': 'Check that you have exactly 11 starters, 1 goalkeeper, and 1 captain designated',
+            'quick-reference-title': 'Quick Reference',
+            'key-deadlines-title': 'Key Deadlines',
+            'deadline-1': '45 minutes before kickoff: Final lineup submission deadline',
+            'deadline-2': '60-90 minutes before: Recommended arrival time at venue',
+            'competition-limits-title': 'Competition Limits',
+            'players-colon': 'Players:',
+            'officials-colon': 'Officials:',
+            stepInstructions: [
+                [
+                    'Log into COMET at comet.canadasoccer.com',
+                    'Navigate to \'Clubs\' tab',
+                    'Click \'My Next Matches\'',
+                    'Find your match and click your club tab at the top'
+                ],
+                [
+                    'Click \'Load Available Players\' button',
+                    'Review your player pool on the left side',
+                    'Check for any players marked in RED (suspended)',
+                    'Verify you have minimum players available'
+                ],
+                [
+                    'Select players and assign roles using the codes above',
+                    'Click the arrow (→) to move players to Start List',
+                    'Use checkboxes and trash icons to move players back if needed'
+                ],
+                [
+                    'Press \'Edit\' button above Club Officials section',
+                    'Use dropdown menus to select officials for each position',
+                    'Ensure you meet minimum requirements'
+                ],
+                [],
+                [
+                    'Match Summary Report will be emailed to club contacts',
+                    'Access match reports through COMET if needed',
+                    'Any disciplinary reports will be sent via email',
+                    'Follow email links to access cases in COMET',
+                    'Prepare for next match if applicable'
+                ]
+            ]
+        },
+        fr: {
+            title: 'Opérations COMET - Jour de match',
+            subtitle: 'Guide de gestion des formations de tournoi',
+            deadline: 'Soumettre 45 minutes avant le coup d\'envoi',
+            playersLabel: 'Joueurs',
+            officialsLabel: 'Officiels',
+            'step-0-title': 'Accéder à votre match',
+            'step-0-description': 'Trouver et ouvrir votre match de tournoi dans COMET',
+            'step-1-title': 'Charger les joueurs disponibles',
+            'step-1-description': 'Accéder à votre bassin de joueurs inscrits pour la compétition',
+            'step-2-title': 'Créer votre liste de départ',
+            'step-2-description': 'Sélectionner les joueurs titulaires et attribuer les rôles',
+            'step-3-title': 'Ajouter les officiels d\'équipe au banc',
+            'step-3-description': 'Sélectionner le personnel d\'entraînement et les officiels pour le match',
+            'step-4-title': 'Soumission finale',
+            'step-4-description': 'Examiner et soumettre votre formation finale',
+            'step-5-title': 'Activités post-match',
+            'step-5-description': 'Tâches de suivi après le match',
+            'role-sl': 'Formation de départ (11 joueurs)',
+            'role-gk': 'Gardien de but (minimum 1 requis)',
+            'role-cp': 'Capitaine (1 requis)',
+            'role-l': 'Formation mais pas titulaire (remplaçants)',
+            'officials-warning': 'Les officiels en ROUGE ont des suspensions actives et ne peuvent pas être sélectionnés',
+            'checklist-starters': '11 joueurs titulaires avec 1 gardien de but',
+            'checklist-captain': '1 capitaine désigné',
+            'checklist-officials': 'Nombre approprié d\'officiels sur le banc',
+            'submission-warning-1': 'Une fois confirmée, la formation ne peut pas être modifiée',
+            'submission-warning-2': 'Doit être soumise 45 minutes avant le coup d\'envoi',
+            'save-confirmed': 'Sauvegarder comme CONFIRMÉ',
+            'troubleshooting-title': 'Problèmes courants et solutions',
+            'problem-1': 'Le joueur apparaît en ROUGE et ne peut pas être sélectionné',
+            'solution-1': 'Le joueur a une suspension active et est inadmissible pour ce match',
+            'problem-2': 'Impossible de trouver le bouton \'Charger les joueurs disponibles\'',
+            'solution-2': 'Assurez-vous d\'être sur la page de match de votre club et d\'avoir les permissions appropriées',
+            'problem-3': 'La soumission de formation affiche une erreur',
+            'solution-3': 'Vérifiez que vous avez exactement 11 titulaires, 1 gardien de but et 1 capitaine désigné',
+            'quick-reference-title': 'Référence rapide',
+            'key-deadlines-title': 'Échéances importantes',
+            'deadline-1': '45 minutes avant le coup d\'envoi : Date limite de soumission de la formation finale',
+            'deadline-2': '60-90 minutes avant : Heure d\'arrivée recommandée au lieu',
+            'competition-limits-title': 'Limites de compétition',
+            'players-colon': 'Joueurs :',
+            'officials-colon': 'Officiels :',
+            stepInstructions: [
+                [
+                    'Connectez-vous à COMET sur comet.canadasoccer.com',
+                    'Naviguez vers l\'onglet \'Clubs\'',
+                    'Cliquez sur \'Mes prochains matchs\'',
+                    'Trouvez votre match et cliquez sur l\'onglet de votre club en haut'
+                ],
+                [
+                    'Cliquez sur le bouton \'Charger les joueurs disponibles\'',
+                    'Examinez votre bassin de joueurs sur le côté gauche',
+                    'Vérifiez les joueurs marqués en ROUGE (suspendus)',
+                    'Vérifiez que vous avez le minimum de joueurs disponibles'
+                ],
+                [
+                    'Sélectionnez les joueurs et attribuez les rôles avec les codes ci-dessus',
+                    'Cliquez sur la flèche (→) pour déplacer les joueurs vers la liste de départ',
+                    'Utilisez les cases à cocher et les icônes de corbeille pour redéplacer les joueurs au besoin'
+                ],
+                [
+                    'Appuyez sur le bouton \'Modifier\' au-dessus de la section Officiels du club',
+                    'Utilisez les menus déroulants pour sélectionner les officiels pour chaque poste',
+                    'Assurez-vous de respecter les exigences minimales'
+                ],
+                [],
+                [
+                    'Le rapport de résumé du match sera envoyé par courriel aux contacts du club',
+                    'Accédez aux rapports de match via COMET si nécessaire',
+                    'Tout rapport disciplinaire sera envoyé par courriel',
+                    'Suivez les liens de courriel pour accéder aux cas dans COMET',
+                    'Préparez-vous pour le prochain match si applicable'
+                ]
+            ]
+        }
+    };
+
+    // Update competition dropdown options
+    function updateCompetitionOptions() {
+        const competitionSelect = document.getElementById('competition-select');
+        if (!competitionSelect) return;
+
+        // Store current selection
+        const currentValue = competitionSelect.value || selectedCompetition;
         
-        // Update roster limits display
-        const rosterLimits = document.querySelectorAll('#roster-limits .competition-limit[data-competition]');
-        const officialsLimits = document.querySelectorAll('#officials-limits .competition-limit[data-competition]');
+        // Clear and rebuild options
+        competitionSelect.innerHTML = '';
         
-        // Reset all limits
-        [...rosterLimits, ...officialsLimits].forEach(limit => {
-            limit.classList.remove('highlighted', 'dimmed');
+        Object.keys(competitions).forEach(key => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = competitions[key].name[currentLanguage];
+            competitionSelect.appendChild(option);
         });
         
-        if (competitionId === 'all') {
-            // Show all limits normally
-            [...rosterLimits, ...officialsLimits].forEach(limit => {
-                limit.style.display = 'block';
-            });
-        } else {
-            // Highlight selected competition and dim others
-            [...rosterLimits, ...officialsLimits].forEach(limit => {
-                const limitCompetition = limit.getAttribute('data-competition');
-                if (limitCompetition === competitionId) {
-                    limit.classList.add('highlighted');
-                    limit.classList.add('highlight-animation');
-                    // Remove animation class after it completes
-                    setTimeout(() => limit.classList.remove('highlight-animation'), 600);
-                } else {
-                    limit.classList.add('dimmed');
-                }
-            });
-            
-            // Show notification
-            showCompetitionChangeNotice(competitionId);
-        }
-        
-        console.log('Competition content updated for:', competitionId);
+        // Restore selection
+        competitionSelect.value = currentValue;
+        selectedCompetition = currentValue;
     }
 
-    // Show notice when competition changes
-    function showCompetitionChangeNotice(competitionId) {
-        const competition = competitionData[competitionId];
+    // Update competition-specific limits
+    function updateCompetitionLimits() {
+        const competition = competitions[selectedCompetition];
         if (!competition) return;
+
+        // Update hero section limits
+        const playerLimits = document.getElementById('player-limits');
+        const officialLimits = document.getElementById('official-limits');
         
-        // Create temporary notice
-        const notice = document.createElement('div');
-        notice.className = 'competition-change-notice';
-        notice.style.cssText = `
+        if (playerLimits) {
+            playerLimits.textContent = `${competition.playerMin}-${competition.playerMax}`;
+        }
+        if (officialLimits) {
+            officialLimits.textContent = `${competition.officialsMin}-${competition.officialsMax}`;
+        }
+
+        // Update reference section limits
+        const refPlayerLimits = document.getElementById('ref-player-limits');
+        const refOfficialLimits = document.getElementById('ref-official-limits');
+        
+        if (refPlayerLimits) {
+            refPlayerLimits.textContent = `${competition.playerMin}-${competition.playerMax}`;
+        }
+        if (refOfficialLimits) {
+            refOfficialLimits.textContent = `${competition.officialsMin}-${competition.officialsMax}`;
+        }
+
+        // Show competition change notification
+        showCompetitionNotification();
+    }
+
+    // Show competition change notification
+    function showCompetitionNotification() {
+        const competition = competitions[selectedCompetition];
+        if (!competition) return;
+
+        const notification = document.createElement('div');
+        notification.style.cssText = `
             position: fixed;
             top: 100px;
             right: 20px;
@@ -129,362 +298,318 @@ document.addEventListener('DOMContentLoaded', function() {
             transform: translateX(100%);
             transition: transform 0.3s ease;
         `;
-        notice.textContent = `Now viewing: ${competition.name}`;
+        notification.textContent = competition.name[currentLanguage];
         
-        document.body.appendChild(notice);
+        document.body.appendChild(notification);
         
-        // Animate in
         setTimeout(() => {
-            notice.style.transform = 'translateX(0)';
+            notification.style.transform = 'translateX(0)';
         }, 100);
         
-        // Remove after delay
         setTimeout(() => {
-            notice.style.transform = 'translateX(100%)';
+            notification.style.transform = 'translateX(100%)';
             setTimeout(() => {
-                if (notice.parentNode) {
-                    notice.parentNode.removeChild(notice);
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
                 }
             }, 300);
         }, 3000);
     }
 
-    // Core navigation functions
-    function showWelcome() {
-        console.log('Showing welcome');
+    // Update all text content for language change
+    function updateLanguageContent() {
+        console.log('Updating language content to:', currentLanguage);
+        const langContent = content[currentLanguage];
         
-        // Show welcome section
-        const welcomeSection = document.getElementById('welcome');
-        if (welcomeSection) {
-            welcomeSection.style.display = 'block';
-        }
-        
-        // Hide all content sections
-        sections.forEach(sectionId => {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.classList.add('hidden');
-            }
-        });
-        
-        currentSectionIndex = -1;
-        isOnWelcome = true;
-        updateBreadcrumb();
-        updateNavigationButtons();
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    
-    function goToSection(sectionId) {
-        console.log('Going to section:', sectionId);
-        
-        const sectionIndex = sections.indexOf(sectionId);
-        if (sectionIndex === -1) {
-            console.error('Section not found:', sectionId);
+        if (!langContent) {
+            console.error('Language content not found for:', currentLanguage);
             return;
         }
         
-        // Hide welcome
-        const welcomeSection = document.getElementById('welcome');
-        if (welcomeSection) {
-            welcomeSection.style.display = 'none';
-        }
-        
-        // Hide all sections first
-        sections.forEach(id => {
-            const section = document.getElementById(id);
-            if (section) {
-                section.classList.add('hidden');
+        // Update all elements with data-text-key
+        document.querySelectorAll('[data-text-key]').forEach(element => {
+            const key = element.getAttribute('data-text-key');
+            if (langContent[key]) {
+                // Add fade effect
+                element.style.opacity = '0.5';
+                setTimeout(() => {
+                    element.textContent = langContent[key];
+                    element.style.opacity = '1';
+                }, 100);
             }
         });
-        
-        // Show target section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.remove('hidden');
-            console.log('Section shown:', sectionId);
-        }
-        
-        currentSectionIndex = sectionIndex;
-        isOnWelcome = false;
-        updateBreadcrumb();
-        updateNavigationButtons();
-        
-        // Update competition content if we're in a section that has competition-specific info
-        if (sectionId === 'your-team') {
-            setTimeout(() => {
-                updateCompetitionContent(selectedCompetition);
-            }, 100);
-        }
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        console.log('Successfully navigated to section:', sectionId);
-    }
-    
-    function nextSection() {
-        console.log('Next section called');
-        if (isOnWelcome) {
-            goToSection(sections[0]);
-        } else if (currentSectionIndex < sections.length - 1) {
-            goToSection(sections[currentSectionIndex + 1]);
-        }
-    }
-    
-    function prevSection() {
-        console.log('Previous section called');
-        if (isOnWelcome) {
-            return;
-        } else if (currentSectionIndex > 0) {
-            goToSection(sections[currentSectionIndex - 1]);
-        } else {
-            showWelcome();
-        }
-    }
-    
-    function updateBreadcrumb() {
-        const breadcrumbText = document.getElementById('breadcrumb-text');
-        if (!breadcrumbText) return;
-        
-        if (isOnWelcome) {
-            breadcrumbText.textContent = 'Getting Started';
-        } else {
-            const currentSection = sections[currentSectionIndex];
-            const sectionNumber = currentSectionIndex + 1;
-            const sectionTitle = sectionTitles[currentSection];
-            breadcrumbText.textContent = `${sectionNumber}. ${sectionTitle}`;
-        }
-    }
-    
-    function updateNavigationButtons() {
-        const prevBtn = document.getElementById('prev-section');
-        const nextBtn = document.getElementById('next-section');
-        const backBtn = document.getElementById('back-to-overview');
-        
-        if (!prevBtn || !nextBtn || !backBtn) return;
-        
-        if (isOnWelcome) {
-            prevBtn.disabled = true;
-            prevBtn.textContent = '← Previous';
-            nextBtn.disabled = false;
-            nextBtn.textContent = 'Get Started →';
-            backBtn.classList.add('hidden');
-        } else {
-            prevBtn.disabled = false;
-            nextBtn.disabled = currentSectionIndex >= sections.length - 1;
-            
-            if (currentSectionIndex === 0) {
-                prevBtn.textContent = '← Overview';
-            } else {
-                prevBtn.textContent = '← Previous';
+
+        // Update step instructions with fade effect
+        langContent.stepInstructions.forEach((instructions, index) => {
+            const instructionList = document.getElementById(`step-${index}-instructions`);
+            if (instructionList && instructions.length > 0) {
+                instructionList.style.opacity = '0.5';
+                setTimeout(() => {
+                    instructionList.innerHTML = '';
+                    instructions.forEach(instruction => {
+                        const li = document.createElement('li');
+                        li.textContent = instruction;
+                        instructionList.appendChild(li);
+                    });
+                    instructionList.style.opacity = '1';
+                }, 100);
             }
-            
-            if (currentSectionIndex >= sections.length - 1) {
-                nextBtn.textContent = 'Complete ✓';
-                nextBtn.disabled = true;
-            } else {
-                nextBtn.textContent = 'Next →';
-            }
-            
-            backBtn.classList.remove('hidden');
+        });
+
+        // Update document language attribute
+        document.documentElement.lang = currentLanguage;
+        
+        // Update competition options after language change
+        updateCompetitionOptions();
+        
+        console.log('Language content updated successfully');
+    }
+
+    // Update progress bar
+    function updateProgress() {
+        const totalSteps = 6;
+        const progress = (completedSteps.size / totalSteps) * 100;
+        const progressFill = document.getElementById('progress-fill');
+        
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
         }
     }
 
-    // Event binding with proper error handling
-    function bindEvents() {
-        console.log('Binding events');
+    // Toggle step completion
+    function toggleStepCompletion(stepIndex) {
+        const stepCard = document.querySelector(`[data-step="${stepIndex}"]`);
+        const checkbox = document.getElementById(`step-${stepIndex}-check`);
         
-        // Competition selector - FIXED
+        if (!stepCard || !checkbox) return;
+
+        if (checkbox.checked) {
+            completedSteps.add(stepIndex);
+            stepCard.classList.add('completed');
+        } else {
+            completedSteps.delete(stepIndex);
+            stepCard.classList.remove('completed');
+        }
+        
+        updateProgress();
+        
+        // Animate completion
+        if (checkbox.checked) {
+            stepCard.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                stepCard.style.transform = '';
+            }, 200);
+        }
+    }
+
+    // Initialize step completion tracking
+    function initializeStepTracking() {
+        for (let i = 0; i < 6; i++) {
+            const checkbox = document.getElementById(`step-${i}-check`);
+            if (checkbox) {
+                checkbox.addEventListener('change', function() {
+                    toggleStepCompletion(i);
+                });
+            }
+        }
+    }
+
+    // Initialize checklist functionality
+    function initializeChecklist() {
+        const checklistItems = document.querySelectorAll('.checklist-checkbox');
+        const submissionBtn = document.querySelector('.submission-btn');
+        
+        function updateSubmissionButton() {
+            const allChecked = Array.from(checklistItems).every(item => item.checked);
+            if (submissionBtn) {
+                if (allChecked) {
+                    submissionBtn.style.background = '#00A651';
+                    submissionBtn.style.cursor = 'pointer';
+                    submissionBtn.disabled = false;
+                } else {
+                    submissionBtn.style.background = '';
+                    submissionBtn.style.cursor = 'not-allowed';
+                    submissionBtn.disabled = true;
+                }
+            }
+        }
+        
+        checklistItems.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSubmissionButton);
+        });
+        
+        // Initial state
+        updateSubmissionButton();
+        
+        // Submission button click
+        if (submissionBtn) {
+            submissionBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const allChecked = Array.from(checklistItems).every(item => item.checked);
+                if (allChecked) {
+                    showSubmissionConfirmation();
+                }
+            });
+        }
+    }
+
+    // Show submission confirmation
+    function showSubmissionConfirmation() {
+        const confirmation = document.createElement('div');
+        confirmation.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-success);
+            color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            z-index: 1001;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+        
+        const text = currentLanguage === 'en' ? 
+            '✓ Lineup Successfully Submitted!' : 
+            '✓ Formation soumise avec succès !';
+        confirmation.textContent = text;
+        
+        document.body.appendChild(confirmation);
+        
+        setTimeout(() => {
+            confirmation.style.opacity = '1';
+        }, 100);
+        
+        setTimeout(() => {
+            confirmation.style.opacity = '0';
+            setTimeout(() => {
+                if (confirmation.parentNode) {
+                    confirmation.parentNode.removeChild(confirmation);
+                }
+            }, 300);
+        }, 3000);
+
+        // Mark final step as complete
+        const finalCheckbox = document.getElementById('step-4-check');
+        if (finalCheckbox && !finalCheckbox.checked) {
+            finalCheckbox.checked = true;
+            toggleStepCompletion(4);
+        }
+    }
+
+    // Event listeners
+    function bindEvents() {
+        console.log('Binding events...');
+        
+        // Language selector - FIX: Make sure this works properly
+        const languageSelect = document.getElementById('language-select');
+        if (languageSelect) {
+            console.log('Language selector found, binding event...');
+            languageSelect.addEventListener('change', function(e) {
+                const newLanguage = e.target.value;
+                console.log('Language changed from', currentLanguage, 'to', newLanguage);
+                
+                if (newLanguage !== currentLanguage && (newLanguage === 'en' || newLanguage === 'fr')) {
+                    currentLanguage = newLanguage;
+                    updateLanguageContent();
+                    updateCompetitionLimits();
+                } else {
+                    console.log('Language change ignored - same language or invalid');
+                }
+            });
+        } else {
+            console.error('Language selector not found!');
+        }
+
+        // Competition selector
         const competitionSelect = document.getElementById('competition-select');
         if (competitionSelect) {
-            console.log('Competition selector found, binding change event');
+            console.log('Competition selector found, binding event...');
             competitionSelect.addEventListener('change', function(e) {
-                const competitionId = e.target.value;
-                console.log('Competition changed to:', competitionId);
-                updateCompetitionContent(competitionId);
+                const newCompetition = e.target.value;
+                console.log('Competition changed to:', newCompetition);
+                selectedCompetition = newCompetition;
+                updateCompetitionLimits();
             });
         } else {
             console.error('Competition selector not found!');
         }
-        
-        // Section cards - FIXED with more robust selection
-        const sectionCards = document.querySelectorAll('.section-card[data-section]');
-        console.log('Found section cards:', sectionCards.length);
-        
-        sectionCards.forEach((card, index) => {
-            const sectionId = card.getAttribute('data-section');
-            console.log(`Binding section card ${index}:`, sectionId);
-            
-            if (!sectionId || !sections.includes(sectionId)) {
-                console.error('Invalid section ID:', sectionId);
-                return;
-            }
-            
-            // Make clickable
-            card.style.cursor = 'pointer';
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', `Navigate to ${sectionTitles[sectionId]}`);
-            
-            // Remove any existing listeners
-            const newCard = card.cloneNode(true);
-            card.parentNode.replaceChild(newCard, card);
-            
-            // Add click listener
-            newCard.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Section card clicked:', sectionId);
-                goToSection(sectionId);
+
+        // Title click to refresh
+        const title = document.querySelector('.comet-title');
+        if (title) {
+            title.addEventListener('click', function() {
+                location.reload();
             });
-            
-            // Add keyboard listener  
-            newCard.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Section card keyboard activated:', sectionId);
-                    goToSection(sectionId);
+        }
+
+        // Smooth scrolling for step completion
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('step-check')) {
+                const stepCard = e.target.closest('.step-card');
+                if (stepCard && e.target.checked) {
+                    setTimeout(() => {
+                        const nextStepCard = stepCard.nextElementSibling;
+                        if (nextStepCard) {
+                            nextStepCard.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'center' 
+                            });
+                        }
+                    }, 500);
                 }
-            });
-            
-            console.log(`Successfully bound events for section: ${sectionId}`);
+            }
         });
         
-        // Navigation buttons - FIXED
-        const prevBtn = document.getElementById('prev-section');
-        const nextBtn = document.getElementById('next-section');
-        const backBtn = document.getElementById('back-to-overview');
-        
-        if (prevBtn) {
-            console.log('Binding prev button');
-            prevBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('Previous button clicked');
-                prevSection();
-            });
-        }
-        
-        if (nextBtn) {
-            console.log('Binding next button');
-            nextBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('Next button clicked');
-                nextSection();
-            });
-        }
-        
-        if (backBtn) {
-            console.log('Binding back button');
-            backBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('Back button clicked');
-                showWelcome();
-            });
-        }
-        
-        // Keyboard navigation
+        console.log('Events bound successfully');
+    }
+
+    // Add keyboard navigation
+    function initializeKeyboardNavigation() {
         document.addEventListener('keydown', function(e) {
-            // Don't interfere when user is typing in select or input
+            // Don't interfere with form inputs
             if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') {
                 return;
             }
             
             switch(e.key) {
-                case 'ArrowRight':
-                case 'ArrowDown':
+                case 'l':
+                case 'L':
+                    // Toggle language with 'L' key
                     e.preventDefault();
-                    nextSection();
+                    const languageSelect = document.getElementById('language-select');
+                    if (languageSelect) {
+                        const newValue = currentLanguage === 'en' ? 'fr' : 'en';
+                        languageSelect.value = newValue;
+                        languageSelect.dispatchEvent(new Event('change'));
+                    }
                     break;
-                case 'ArrowLeft':
-                case 'ArrowUp':
-                    e.preventDefault();
-                    prevSection();
-                    break;
-                case 'Escape':
-                    e.preventDefault();
-                    showWelcome();
-                    break;
+                    
                 case '1':
                 case '2':
                 case '3':
                 case '4':
+                case '5':
+                case '6':
+                    // Jump to step with number keys
                     e.preventDefault();
-                    const sectionIndex = parseInt(e.key) - 1;
-                    if (sectionIndex < sections.length) {
-                        goToSection(sections[sectionIndex]);
+                    const stepIndex = parseInt(e.key) - 1;
+                    const stepCard = document.querySelector(`[data-step="${stepIndex}"]`);
+                    if (stepCard) {
+                        stepCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                     break;
             }
         });
-        
-        // Header navigation
-        const breadcrumb = document.getElementById('breadcrumb-text');
-        if (breadcrumb) {
-            breadcrumb.style.cursor = 'pointer';
-            breadcrumb.addEventListener('click', function(e) {
-                e.preventDefault();
-                showWelcome();
-            });
-        }
-        
-        // COMET title click
-        const cometTitle = document.querySelector('.comet-title');
-        if (cometTitle) {
-            cometTitle.style.cursor = 'pointer';
-            cometTitle.addEventListener('click', function(e) {
-                e.preventDefault();
-                showWelcome();
-            });
-        }
-        
-        console.log('All events bound successfully');
     }
 
-    // Initialize application
-    function initialize() {
-        console.log('Initializing COMET Guide');
-        
-        // Ensure DOM is ready
-        const welcomeSection = document.getElementById('welcome');
-        const competitionSelect = document.getElementById('competition-select');
-        
-        if (!welcomeSection) {
-            console.error('Welcome section not found!');
-            return;
-        }
-        
-        if (!competitionSelect) {
-            console.error('Competition selector not found!');
-        }
-        
-        bindEvents();
-        updateBreadcrumb();
-        updateNavigationButtons();
-        
-        // Initialize competition content
-        updateCompetitionContent('all');
-        
-        // Add smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth';
-        
-        // Add accessibility improvements
-        const sectionCards = document.querySelectorAll('.section-card');
-        sectionCards.forEach((card, index) => {
-            const titleElement = card.querySelector('h3');
-            if (titleElement) {
-                card.setAttribute('aria-label', `Navigate to section ${index + 1}: ${titleElement.textContent}`);
-            }
-        });
-        
-        console.log('COMET Guide initialized successfully');
-    }
-
-    // Enhanced features initialization
-    function initializeEnhancedFeatures() {
-        // Intersection Observer for animations
+    // Add intersection observer for step animations
+    function initializeAnimations() {
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry, index) {
@@ -495,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }, index * 100);
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.1, rootMargin: '50px' });
             
             document.querySelectorAll('.step-card').forEach(function(card) {
                 card.style.opacity = '0';
@@ -504,101 +629,83 @@ document.addEventListener('DOMContentLoaded', function() {
                 observer.observe(card);
             });
         }
-        
-        // Add print support
-        addPrintSupport();
-        
-        console.log('Enhanced features initialized');
     }
 
-    function addPrintSupport() {
-        const printBtn = document.createElement('button');
-        printBtn.textContent = '🖨 Print Guide';
-        printBtn.className = 'btn btn--outline btn--sm';
-        printBtn.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            display: block;
-        `;
+    // Initialize everything
+    function initialize() {
+        console.log('Initializing COMET Matchday Operations');
         
-        printBtn.addEventListener('click', function() {
-            // Show all sections for printing
-            sections.forEach(sectionId => {
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    section.classList.remove('hidden');
-                }
-            });
-            
-            window.print();
-            
-            // Restore current view after printing
-            setTimeout(() => {
-                if (isOnWelcome) {
-                    showWelcome();
-                } else {
-                    goToSection(sections[currentSectionIndex]);
-                }
-            }, 1000);
-        });
+        // Initialize in correct order
+        bindEvents();
+        initializeStepTracking();
+        initializeChecklist();
+        initializeKeyboardNavigation();
         
-        document.body.appendChild(printBtn);
+        // Set initial values
+        updateLanguageContent();
+        updateCompetitionOptions();
+        updateCompetitionLimits();
+        updateProgress();
+        
+        // Initialize animations after slight delay
+        setTimeout(initializeAnimations, 200);
+        
+        console.log('COMET Matchday Operations initialized successfully');
     }
 
-    // Wait for DOM to be fully ready before initializing
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize);
-    } else {
-        initialize();
-    }
-    
-    // Initialize enhanced features after short delay
-    setTimeout(initializeEnhancedFeatures, 500);
-    
-    // Debug and API functions
-    window.cometGuideDebug = {
-        goToSection: goToSection,
-        showWelcome: showWelcome,
-        nextSection: nextSection,
-        prevSection: prevSection,
-        updateCompetitionContent: updateCompetitionContent,
-        getCurrentState: function() {
+    // Public API for debugging and external control
+    window.cometMatchday = {
+        setLanguage: function(lang) {
+            console.log('API: Setting language to', lang);
+            if (lang === 'en' || lang === 'fr') {
+                currentLanguage = lang;
+                const languageSelect = document.getElementById('language-select');
+                if (languageSelect) {
+                    languageSelect.value = lang;
+                }
+                updateLanguageContent();
+                updateCompetitionOptions();
+            }
+        },
+        setCompetition: function(comp) {
+            console.log('API: Setting competition to', comp);
+            if (competitions[comp]) {
+                selectedCompetition = comp;
+                const competitionSelect = document.getElementById('competition-select');
+                if (competitionSelect) {
+                    competitionSelect.value = comp;
+                }
+                updateCompetitionLimits();
+            }
+        },
+        getState: function() {
             return {
-                currentSectionIndex: currentSectionIndex,
-                isOnWelcome: isOnWelcome,
-                selectedCompetition: selectedCompetition,
-                sections: sections,
-                competitionData: competitionData
+                language: currentLanguage,
+                competition: selectedCompetition,
+                completedSteps: Array.from(completedSteps),
+                progress: (completedSteps.size / 6) * 100
             };
         },
-        setCompetition: function(competitionId) {
-            const competitionSelect = document.getElementById('competition-select');
-            if (competitionSelect) {
-                competitionSelect.value = competitionId;
-                competitionSelect.dispatchEvent(new Event('change'));
+        markStepComplete: function(stepIndex) {
+            const checkbox = document.getElementById(`step-${stepIndex}-check`);
+            if (checkbox) {
+                checkbox.checked = true;
+                toggleStepCompletion(stepIndex);
+            }
+        },
+        // Debug function to test language switching
+        testLanguageSwitch: function() {
+            console.log('Testing language switch...');
+            const languageSelect = document.getElementById('language-select');
+            if (languageSelect) {
+                languageSelect.value = currentLanguage === 'en' ? 'fr' : 'en';
+                languageSelect.dispatchEvent(new Event('change'));
             }
         }
     };
 
-    // Public API
-    window.cometGuide = {
-        navigateToSection: goToSection,
-        selectCompetition: function(competitionId) {
-            const competitionSelect = document.getElementById('competition-select');
-            if (competitionSelect && competitionData[competitionId]) {
-                competitionSelect.value = competitionId;
-                updateCompetitionContent(competitionId);
-            }
-        },
-        getCurrentSection: function() {
-            return isOnWelcome ? 'welcome' : sections[currentSectionIndex];
-        },
-        getSelectedCompetition: function() {
-            return selectedCompetition;
-        }
-    };
-
-    console.log('COMET Guide script loaded and ready');
+    // Initialize the application
+    initialize();
+    
+    console.log('COMET Matchday Operations script loaded and ready');
 });
