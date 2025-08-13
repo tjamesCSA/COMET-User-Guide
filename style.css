@@ -780,12 +780,65 @@ select.form-control {
   font-weight: var(--font-weight-semibold);
 }
 
+.last-updated {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-20);
+}
+
+.competition-selector {
+  min-width: 250px;
+  position: relative;
+}
+
+.competition-dropdown {
+  background-color: var(--color-white) !important;
+  color: var(--color-text) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  font-size: var(--font-size-sm) !important;
+  font-weight: var(--font-weight-medium) !important;
+  width: 100% !important;
+  padding: var(--space-8) var(--space-12) !important;
+  border-radius: var(--radius-base) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all var(--duration-fast) var(--ease-standard) !important;
+}
+
+.competition-dropdown:focus {
+  border-color: var(--color-white) !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3) !important;
+  outline: none !important;
+}
+
+.competition-dropdown:hover {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: none !important;
+}
+
+.competition-dropdown option {
+  background-color: var(--color-white) !important;
+  color: var(--color-text) !important;
+  padding: var(--space-8) !important;
+}
+
 .breadcrumb {
   font-size: var(--font-size-md);
   opacity: 0.9;
   display: flex;
   align-items: center;
   gap: var(--space-8);
+  white-space: nowrap;
 }
 
 /* Main Content */
@@ -809,10 +862,22 @@ select.form-control {
 .welcome-description {
   font-size: var(--font-size-xl);
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-32);
-  max-width: 600px;
+  margin-bottom: var(--space-24);
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.competition-notice {
+  background: var(--color-bg-2);
+  border: 1px solid rgba(var(--color-warning-rgb), 0.3);
+  border-radius: var(--radius-base);
+  padding: var(--space-16);
+  margin: var(--space-24) auto;
+  max-width: 600px;
+  color: var(--color-warning);
+  position: relative;
+  z-index: 1;
 }
 
 .section-overview {
@@ -833,11 +898,19 @@ select.form-control {
   align-items: center;
   gap: var(--space-16);
   text-align: left;
+  position: relative;
+  z-index: 1;
+  outline: none;
 }
 
 .section-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
+}
+
+.section-card:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
 }
 
 .section-number {
@@ -908,10 +981,17 @@ select.form-control {
   display: flex;
   gap: var(--space-20);
   transition: box-shadow var(--duration-normal) var(--ease-standard);
+  position: relative;
+  z-index: 1;
 }
 
 .step-card:hover {
   box-shadow: var(--shadow-md);
+}
+
+.corrected-section {
+  border-left: 4px solid #00A651;
+  background: var(--color-bg-3);
 }
 
 .step-number {
@@ -972,6 +1052,54 @@ select.form-control {
   margin-bottom: var(--space-4);
 }
 
+/* Competition-specific roster and officials limits */
+.roster-limits-container,
+.officials-limits-container {
+  background: var(--color-bg-1);
+  border: 1px solid rgba(var(--color-primary), 0.3);
+  border-radius: var(--radius-base);
+  padding: var(--space-16);
+  margin: var(--space-16) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.roster-limits-container h4,
+.officials-limits-container h4 {
+  margin: 0 0 var(--space-12) 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.roster-limits,
+.officials-limits {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.competition-limit {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-12);
+  transition: all var(--duration-normal) var(--ease-standard);
+  position: relative;
+  z-index: 1;
+}
+
+.competition-limit.highlighted {
+  background: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  border-color: var(--color-primary) !important;
+  transform: scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.competition-limit.dimmed {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+
 /* Status Flow */
 .status-flow {
   display: flex;
@@ -1018,6 +1146,8 @@ select.form-control {
   border-radius: var(--radius-base);
   padding: var(--space-16);
   margin: var(--space-12) 0;
+  position: relative;
+  z-index: 1;
 }
 
 .warning-note {
@@ -1027,6 +1157,8 @@ select.form-control {
   padding: var(--space-16);
   margin: var(--space-12) 0;
   color: var(--color-error);
+  position: relative;
+  z-index: 1;
 }
 
 .critical-note {
@@ -1036,6 +1168,8 @@ select.form-control {
   padding: var(--space-16);
   margin: var(--space-12) 0;
   color: var(--color-error);
+  position: relative;
+  z-index: 1;
 }
 
 .step-instruction {
@@ -1044,6 +1178,8 @@ select.form-control {
   padding: var(--space-12);
   margin: var(--space-8) 0;
   font-style: italic;
+  position: relative;
+  z-index: 1;
 }
 
 /* Important Notes Section */
@@ -1053,6 +1189,8 @@ select.form-control {
   padding: var(--space-24);
   margin-top: var(--space-32);
   border: 1px solid var(--color-card-border);
+  position: relative;
+  z-index: 1;
 }
 
 .important-notes h3 {
@@ -1072,6 +1210,8 @@ select.form-control {
   border-radius: var(--radius-base);
   padding: var(--space-16);
   border: 1px solid rgba(var(--color-success-rgb), 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 /* Navigation Controls */
@@ -1090,10 +1230,16 @@ select.form-control {
   font-weight: var(--font-weight-medium);
   box-shadow: var(--shadow-lg);
   transition: all var(--duration-normal) var(--ease-standard);
+  outline: none;
 }
 
 .nav-btn:hover {
   transform: translateY(-2px);
+}
+
+.nav-btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
 }
 
 .nav-btn:disabled {
@@ -1106,6 +1252,78 @@ select.form-control {
   display: none;
 }
 
+/* Remove problematic visual overlays and focus states */
+.competition-dropdown::-ms-expand {
+  display: none;
+}
+
+.competition-dropdown::after,
+.competition-dropdown::before {
+  display: none !important;
+}
+
+/* Ensure no persistent overlays */
+.competition-selector::after,
+.competition-selector::before,
+.header-controls::after,
+.header-controls::before {
+  display: none !important;
+}
+
+/* Competition change notification */
+.competition-change-notice {
+  position: fixed !important;
+  top: 100px !important;
+  right: 20px !important;
+  z-index: 1001 !important;
+  pointer-events: none !important;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes highlightPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.highlight-animation {
+  animation: highlightPulse 0.6s ease-in-out;
+}
+
+.welcome-section {
+  opacity: 0;
+  animation: fadeInUp var(--duration-normal) var(--ease-standard) forwards;
+}
+
+/* Content section transitions */
+.content-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.content-section:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
@@ -1114,8 +1332,23 @@ select.form-control {
     text-align: center;
   }
 
+  .header-controls {
+    flex-direction: column;
+    gap: var(--space-12);
+    width: 100%;
+  }
+
+  .competition-selector {
+    min-width: auto;
+    width: 100%;
+  }
+
   .comet-title {
     font-size: var(--font-size-2xl);
+  }
+
+  .last-updated {
+    font-size: var(--font-size-xs);
   }
 
   .welcome-content h2 {
@@ -1164,6 +1397,11 @@ select.form-control {
   .notes-grid {
     grid-template-columns: 1fr;
   }
+
+  .roster-limits,
+  .officials-limits {
+    gap: var(--space-12);
+  }
 }
 
 @media (max-width: 480px) {
@@ -1190,47 +1428,18 @@ select.form-control {
   .nav-btn {
     max-width: none;
   }
-}
 
-/* Animation and Transitions */
-.content-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all var(--duration-normal) var(--ease-standard);
-}
-
-.content-section:not(.hidden) {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.welcome-section {
-  opacity: 0;
-  animation: fadeInUp var(--duration-normal) var(--ease-standard) forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  .logo-section {
+    flex-direction: column;
+    gap: var(--space-8);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Focus states for accessibility */
-.section-card:focus-visible,
-.step-card:focus-visible {
-  outline: var(--focus-outline);
-  outline-offset: 4px;
 }
 
 /* Print styles */
 @media print {
   .header,
-  .navigation-controls {
+  .navigation-controls,
+  .competition-selector {
     display: none;
   }
   
@@ -1241,4 +1450,47 @@ select.form-control {
   .step-card {
     break-inside: avoid;
   }
+
+  .corrected-section {
+    border: 2px solid #00A651 !important;
+  }
+
+  .competition-limit {
+    border: 1px solid #000 !important;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .competition-limit.highlighted {
+    background: var(--color-teal-300) !important;
+    color: var(--color-slate-900) !important;
+  }
+  
+  .competition-dropdown {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
+  }
+  
+  .competition-dropdown option {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+  }
+}
+
+[data-color-scheme="dark"] .competition-limit.highlighted {
+  background: var(--color-teal-300) !important;
+  color: var(--color-slate-900) !important;
+}
+
+[data-color-scheme="dark"] .competition-dropdown {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+[data-color-scheme="dark"] .competition-dropdown option {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
 }

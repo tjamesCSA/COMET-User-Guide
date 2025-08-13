@@ -13,10 +13,24 @@
                 <div class="logo-section">
                     <h1 class="comet-title">COMET User Guide</h1>
                     <span class="canada-soccer-badge">Canada Soccer</span>
+                    <div class="last-updated">Last updated: August 13, 2025</div>
                 </div>
-                <nav class="breadcrumb">
-                    <span id="breadcrumb-text">Getting Started</span>
-                </nav>
+                <div class="header-controls">
+                    <div class="competition-selector">
+                        <label for="competition-select" class="sr-only">Select Competition</label>
+                        <select id="competition-select" class="form-control competition-dropdown">
+                            <option value="all">All Competitions</option>
+                            <option value="national-adult">National Championships (Adult/Senior)</option>
+                            <option value="national-youth">National Championships (Youth U-17/U-15)</option>
+                            <option value="pdp">PDP Championship</option>
+                            <option value="masters">Masters Championship</option>
+                            <option value="futsal">Futsal Canadian Championship</option>
+                        </select>
+                    </div>
+                    <nav class="breadcrumb">
+                        <span id="breadcrumb-text">Getting Started</span>
+                    </nav>
+                </div>
             </div>
         </div>
     </header>
@@ -29,8 +43,11 @@
                     <h2>Welcome to COMET</h2>
                     <p class="welcome-description">
                         This guide will walk you through the complete process of using COMET for competition management, 
-                        from club setup to match day lineups.
+                        from club setup to match day lineups. Select a specific competition above to see tailored requirements.
                     </p>
+                    <div class="competition-notice">
+                        <strong>Important:</strong> Requirements vary by competition type. Use the competition selector above to view specific requirements for your competition.
+                    </div>
                     <div class="section-overview">
                         <div class="section-card" data-section="participating-clubs" style="border-left: 4px solid #E31E24;">
                             <div class="section-number">1</div>
@@ -77,10 +94,10 @@
                         <div class="step-number">1.1</div>
                         <div class="step-content">
                             <h3>Timeline of Events</h3>
-                            <p>Key deadlines and important dates for competition preparation</p>
+                            <p>Key deadlines and important dates for competition preparation - these vary by competition type</p>
                             <div class="step-details">
                                 <div class="important-note">
-                                    <strong>Important:</strong> Review all competition deadlines carefully to ensure your club meets all requirements.
+                                    <strong>Important:</strong> Review all competition deadlines carefully to ensure your club meets all requirements. Each competition has specific timelines for registration, document submission, and team finalization.
                                 </div>
                             </div>
                         </div>
@@ -91,7 +108,7 @@
                             <h3>Preparation Phase</h3>
                             <p>Initial setup and qualification requirements</p>
                             <div class="step-details">
-                                <p>Ensure your club meets all eligibility requirements before proceeding to registration.</p>
+                                <p>Ensure your club meets all eligibility requirements before proceeding to registration. Requirements may vary between amateur and professional competitions.</p>
                             </div>
                         </div>
                     </div>
@@ -175,7 +192,7 @@
                                     <li>Press 'Save'</li>
                                 </ol>
                                 <div class="important-note">
-                                    <strong>Requirement:</strong> Teams must have at least 2 different and distinct sets of uniforms.
+                                    <strong>Requirement:</strong> Teams must have at least 2 different and distinct sets of uniforms. Goalkeepers need 2 uniforms distinguishable from other players plus 3 distinct colour socks.
                                 </div>
                             </div>
                         </div>
@@ -224,7 +241,7 @@
                             <div class="step-details">
                                 <p><strong>Required fields:</strong></p>
                                 <ul class="requirement-list">
-                                    <li>National ID</li>
+                                    <li>National ID (or passport/driver's license)</li>
                                     <li>Gender</li>
                                     <li>Family Name</li>
                                     <li>First Name</li>
@@ -285,17 +302,76 @@
                             </div>
                         </div>
                     </div>
-                    <div class="step-card">
+                    <div class="step-card corrected-section">
                         <div class="step-number">3.6</div>
                         <div class="step-content">
-                            <h3>Adding Players to Competition</h3>
+                            <h3>Adding Players to Competition - CORRECTED</h3>
                             <div class="step-details">
                                 <ol class="step-list">
                                     <li>Navigate to 'My Competitions' and select your competition</li>
                                     <li>Go to 'Clubs' tab, find your club, click 'Player' button</li>
-                                    <li>Select CONFIRMED players (max 14, min 10), enter shirt numbers</li>
+                                    <li>Select CONFIRMED players and enter shirt numbers</li>
                                     <li>Click 'Add Selected', then change status to SUBMITTED</li>
                                 </ol>
+                                <div class="roster-limits-container">
+                                    <h4>COMPETITION-SPECIFIC ROSTER LIMITS:</h4>
+                                    <div id="roster-limits" class="roster-limits">
+                                        <div class="competition-limit" data-competition="national-adult">
+                                            <strong>National Championships (Adult/Senior):</strong> 15-21 players
+                                        </div>
+                                        <div class="competition-limit" data-competition="national-youth">
+                                            <strong>National Championships (Youth U-17/U-15):</strong> 15-20 players
+                                        </div>
+                                        <div class="competition-limit" data-competition="pdp">
+                                            <strong>PDP Championship:</strong> 16-20 players
+                                        </div>
+                                        <div class="competition-limit" data-competition="masters">
+                                            <strong>Masters Championship:</strong> 15-21 players
+                                        </div>
+                                        <div class="competition-limit" data-competition="futsal">
+                                            <strong>Futsal Championship:</strong> 10-14 players
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="important-note">
+                                    <strong>Required:</strong> All competitions require minimum 1 goalkeeper
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-card corrected-section">
+                        <div class="step-number">3.7</div>
+                        <div class="step-content">
+                            <h3>Adding Team Officials to Competition - UPDATED</h3>
+                            <div class="step-details">
+                                <ol class="step-list">
+                                    <li>Select 'Officials' button beside your Club name</li>
+                                    <li>Select officials from your Club pool</li>
+                                    <li>Click 'Add Selected' when finished</li>
+                                </ol>
+                                <div class="officials-limits-container">
+                                    <h4>TEAM OFFICIALS LIMITS BY COMPETITION:</h4>
+                                    <div id="officials-limits" class="officials-limits">
+                                        <div class="competition-limit" data-competition="national-adult">
+                                            <strong>National Championships (Adult/Senior):</strong> 2-5 officials
+                                        </div>
+                                        <div class="competition-limit" data-competition="national-youth">
+                                            <strong>National Championships (Youth U-17/U-15):</strong> 2-5 officials
+                                        </div>
+                                        <div class="competition-limit" data-competition="pdp">
+                                            <strong>PDP Championship:</strong> 2-6 officials
+                                        </div>
+                                        <div class="competition-limit" data-competition="masters">
+                                            <strong>Masters Championship:</strong> 2-5 officials
+                                        </div>
+                                        <div class="competition-limit" data-competition="futsal">
+                                            <strong>Futsal Championship:</strong> 2-4 officials
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="important-note">
+                                    <strong>Required:</strong> All competitions require at least one official of same gender as division
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,10 +439,10 @@
                                 <ol class="step-list">
                                     <li>Press 'Edit' button above Club Officials section</li>
                                     <li>Use dropdown menu to select appropriate individual for each position</li>
-                                    <li>Maximum of 4 officials</li>
+                                    <li>Respect maximum officials allowed per competition type</li>
                                 </ol>
                                 <div class="important-note">
-                                    <strong>Note:</strong> Only individuals registered to your Club will appear in dropdown.
+                                    <strong>Note:</strong> Only individuals registered to your Club will appear in dropdown. Official limits vary by competition - see Section 3.7 for details.
                                 </div>
                             </div>
                         </div>
@@ -381,9 +457,12 @@
                                 </div>
                                 <ul class="step-list">
                                     <li>Once confirmed, your lineup is submitted and cannot be changed</li>
-                                    <li>This must be done no later than 45 minutes prior to match</li>
+                                    <li>This must be done no later than 45 minutes prior to match kick-off</li>
                                     <li>Your submission is stamped with your electronic signature</li>
                                 </ul>
+                                <div class="important-note">
+                                    <strong>Note:</strong> COMET accounts should never be shared - electronic signatures are individual
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -408,22 +487,25 @@
                 <h3>Important Notes</h3>
                 <div class="notes-grid">
                     <div class="note-item">
-                        <strong>National ID:</strong> National ID Number is a required field - you may use passport or driver's license number
+                        <strong>National ID:</strong> National ID Number is required - use passport or driver's license if no ID number available
                     </div>
                     <div class="note-item">
                         <strong>Common Name:</strong> Common name appears on game sheets - ensure first and last name is entered
                     </div>
                     <div class="note-item">
-                        <strong>Eligibility:</strong> Players must be eligible to play in any league match for current season
+                        <strong>Eligibility:</strong> Players must be eligible for current season league matches
                     </div>
                     <div class="note-item">
-                        <strong>Reinforcement:</strong> No reinforcement players may be registered after qualifying
+                        <strong>Reinforcement:</strong> No reinforcement players after qualifying for competition
                     </div>
                     <div class="note-item">
-                        <strong>Player Limits:</strong> Maximum 21 players for adult/senior championships, maximum 20 for youth
+                        <strong>Roster Limits:</strong> Roster limits vary significantly by competition type - always check requirements
                     </div>
                     <div class="note-item">
                         <strong>Security:</strong> COMET accounts should never be shared - electronic signatures are individual
+                    </div>
+                    <div class="note-item">
+                        <strong>Deadlines:</strong> All deadlines must be met - late submissions may not be accepted
                     </div>
                 </div>
             </section>
