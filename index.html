@@ -39,47 +39,51 @@
 
     <main class="main-content">
         <div class="container">
+            
             <!-- Hero Section -->
             <section class="hero-section">
                 <div class="hero-content">
                     <h2 data-text-key="subtitle">Tournament Lineup Management Guide</h2>
+                    
                     <div class="deadline-banner">
                         <div class="deadline-icon">⏰</div>
                         <div class="deadline-text">
                             <strong data-text-key="deadline">Submit 60 minutes before kickoff</strong>
                         </div>
                     </div>
+                    
                     <div class="competition-info">
                         <div class="roster-limits">
                             <div class="limit-item">
-                                <div class="limit-label" data-text-key="playersLabel">Players:</div>
-                                <div class="limit-value" id="player-limits">15-21</div>
+                                <span class="limit-label" data-text-key="playersLabel">Players</span>
+                                <span class="limit-value" id="player-limits">15-21</span>
                             </div>
                             <div class="limit-item">
-                                <div class="limit-label" data-text-key="officialsLabel">Officials:</div>
-                                <div class="limit-value" id="official-limits">2-5</div>
+                                <span class="limit-label" data-text-key="officialsLabel">Officials</span>
+                                <span class="limit-value" id="official-limits">2-5</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
             <!-- Steps Section -->
             <section class="steps-section">
-                <div class="progress-bar">
-                    <div class="progress-track">
-                        <div class="progress-fill" id="progress-fill"></div>
-                    </div>
-                </div>
-
                 <div class="steps-container">
-                    <!-- Step 1: Accessing Match -->
+                    
+                    <!-- Step 1 -->
                     <div class="step-card" data-step="0">
                         <div class="step-header">
                             <div class="step-number">1</div>
                             <div class="step-checkbox">
                                 <input type="checkbox" id="step-0-check" class="step-check">
-                                <label for="step-0-check" class="sr-only">Mark step 1 complete</label>
                             </div>
                         </div>
                         <div class="step-content">
@@ -96,13 +100,12 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Loading Players -->
+                    <!-- Step 2 -->
                     <div class="step-card" data-step="1">
                         <div class="step-header">
                             <div class="step-number">2</div>
                             <div class="step-checkbox">
                                 <input type="checkbox" id="step-1-check" class="step-check">
-                                <label for="step-1-check" class="sr-only">Mark step 2 complete</label>
                             </div>
                         </div>
                         <div class="step-content">
@@ -119,37 +122,38 @@
                         </div>
                     </div>
 
-                    <!-- Step 3: Creating Start List -->
+                    <!-- Step 3 -->
                     <div class="step-card" data-step="2">
                         <div class="step-header">
                             <div class="step-number">3</div>
                             <div class="step-checkbox">
                                 <input type="checkbox" id="step-2-check" class="step-check">
-                                <label for="step-2-check" class="sr-only">Mark step 3 complete</label>
                             </div>
                         </div>
                         <div class="step-content">
                             <h3 data-text-key="step-2-title">Creating Your Start List</h3>
                             <p data-text-key="step-2-description">Select starting players and assign roles</p>
-                            <div class="step-instructions">
-                                <div class="role-guide">
-                                    <div class="role-item">
-                                        <span class="role-code">SL</span>
-                                        <span id="role-sl-text" class="role-desc" data-text-key="role-sl">Starting Lineup (11 players)</span>
-                                    </div>
-                                    <div class="role-item">
-                                        <span class="role-code">GK</span>
-                                        <span class="role-desc" data-text-key="role-gk">Goalkeeper (minimum 1 required)</span>
-                                    </div>
-                                    <div class="role-item">
-                                        <span class="role-code">CP</span>
-                                        <span class="role-desc" data-text-key="role-cp">Captain (1 required)</span>
-                                    </div>
-                                    <div class="role-item">
-                                        <span class="role-code">L</span>
-                                        <span class="role-desc" data-text-key="role-l">Lineup but not starting (substitutes)</span>
-                                    </div>
+                            
+                            <div class="role-guide">
+                                <div class="role-item">
+                                    <span class="role-code">SL</span>
+                                    <span class="role-desc" data-text-key="role-sl">Starting Lineup (11 players)</span>
                                 </div>
+                                <div class="role-item">
+                                    <span class="role-code">GK</span>
+                                    <span class="role-desc" data-text-key="role-gk">Goalkeeper (minimum 1 required)</span>
+                                </div>
+                                <div class="role-item">
+                                    <span class="role-code">CP</span>
+                                    <span class="role-desc" data-text-key="role-cp">Captain (1 required)</span>
+                                </div>
+                                <div class="role-item">
+                                    <span class="role-code">L</span>
+                                    <span class="role-desc" data-text-key="role-l">Lineup but not starting (substitutes)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="step-instructions">
                                 <ol class="instruction-list" id="step-2-instructions">
                                     <li>Select players and assign roles using the codes above</li>
                                     <li>Click the arrow (→) to move players to Start List</li>
@@ -159,13 +163,12 @@
                         </div>
                     </div>
 
-                    <!-- Step 4: Managing Officials -->
+                    <!-- Step 4 -->
                     <div class="step-card" data-step="3">
                         <div class="step-header">
                             <div class="step-number">4</div>
                             <div class="step-checkbox">
                                 <input type="checkbox" id="step-3-check" class="step-check">
-                                <label for="step-3-check" class="sr-only">Mark step 4 complete</label>
                             </div>
                         </div>
                         <div class="step-content">
@@ -184,54 +187,51 @@
                         </div>
                     </div>
 
-                    <!-- Step 5: Final Submission -->
+                    <!-- Step 5 -->
                     <div class="step-card" data-step="4">
                         <div class="step-header">
                             <div class="step-number">5</div>
                             <div class="step-checkbox">
                                 <input type="checkbox" id="step-4-check" class="step-check">
-                                <label for="step-4-check" class="sr-only">Mark step 5 complete</label>
                             </div>
                         </div>
                         <div class="step-content">
                             <h3 data-text-key="step-4-title">Final Submission</h3>
                             <p data-text-key="step-4-description">Review and submit your final lineup</p>
-                            <div class="step-instructions">
-                                <div class="critical-checklist">
-                                    <div class="checklist-item">
-                                        <input type="checkbox" id="check-starters" class="checklist-checkbox">
-                                        <label id="checklist-starters-text" for="check-starters" data-text-key="checklist-starters">11 starting players with 1 goalkeeper</label>
-                                    </div>
-                                    <div class="checklist-item">
-                                        <input type="checkbox" id="check-captain" class="checklist-checkbox">
-                                        <label for="check-captain" data-text-key="checklist-captain">1 designated captain</label>
-                                    </div>
-                                    <div class="checklist-item">
-                                        <input type="checkbox" id="check-officials" class="checklist-checkbox">
-                                        <label for="check-officials" data-text-key="checklist-officials">Appropriate number of officials on bench</label>
-                                    </div>
+                            
+                            <div class="critical-checklist">
+                                <div class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" id="checklist-1">
+                                    <label for="checklist-1" data-text-key="checklist-starters">11 starting players with 1 goalkeeper</label>
                                 </div>
-                                <div class="submission-warning">
-                                    <div class="warning-icon">⚠️</div>
-                                    <div class="warning-text">
-                                        <p data-text-key="submission-warning-1">Once confirmed, lineup cannot be changed</p>
-                                        <p data-text-key="submission-warning-2">Must be submitted 45 minutes before kickoff</p>
-                                    </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" id="checklist-2">
+                                    <label for="checklist-2" data-text-key="checklist-captain">1 designated captain</label>
                                 </div>
-                                <button class="btn btn--primary btn--lg submission-btn" data-text-key="save-confirmed">
-                                    Save as CONFIRMED
-                                </button>
+                                <div class="checklist-item">
+                                    <input type="checkbox" class="checklist-checkbox" id="checklist-3">
+                                    <label for="checklist-3" data-text-key="checklist-officials">Appropriate number of officials on bench</label>
+                                </div>
                             </div>
+                            
+                            <div class="submission-warning">
+                                <div class="warning-icon">⚠️</div>
+                                <div class="warning-text">
+                                    <p data-text-key="submission-warning-1">Once confirmed, lineup cannot be changed</p>
+                                    <p data-text-key="submission-warning-2">Must be submitted 60 minutes before kickoff</p>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn--primary submission-btn" data-text-key="save-confirmed">Save as CONFIRMED</button>
                         </div>
                     </div>
 
-                    <!-- Step 6: Post-Match -->
+                    <!-- Step 6 -->
                     <div class="step-card" data-step="5">
                         <div class="step-header">
                             <div class="step-number">6</div>
                             <div class="step-checkbox">
                                 <input type="checkbox" id="step-5-check" class="step-check">
-                                <label for="step-5-check" class="sr-only">Mark step 6 complete</label>
                             </div>
                         </div>
                         <div class="step-content">
@@ -248,6 +248,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </section>
 
@@ -277,7 +278,7 @@
                     <div class="reference-card">
                         <h3 data-text-key="key-deadlines-title">Key Deadlines</h3>
                         <ul class="deadline-list">
-                            <li data-text-key="deadline-1">45 minutes before kickoff: Final lineup submission deadline</li>
+                            <li data-text-key="deadline-1">60 minutes before kickoff: Final lineup submission deadline</li>
                             <li data-text-key="deadline-2">60-90 minutes before: Recommended arrival time at venue</li>
                         </ul>
                     </div>
@@ -296,6 +297,7 @@
                     </div>
                 </div>
             </section>
+
         </div>
     </main>
 
